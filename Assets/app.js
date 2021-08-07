@@ -1,7 +1,7 @@
 // Save day of week from moment to const
 const dayOfWeek = moment().format("dddd MMM Do YYYY"); // Sunday, March 14th 2016 (or something like that)
-const inputRefList = [];
-const events = [];
+const inputRefList = []; // Allow quick reference of all input items to grab values easier
+const events = []; //An array of objects, each with properties of time and event
 
 // Show the current day at the top of the page
 $("#currentDay").append("<div class=>" + dayOfWeek + "</div>");
@@ -14,6 +14,7 @@ function init() {
       newEvent = {
         time: moment().hour(i).format("HH") + ":00",
         event: "",
+        hour: parseInt(moment().hour(i).format("H")),
       };
     } else {
       newEvent = savedEvents[i - 9];
@@ -21,29 +22,55 @@ function init() {
     }
     events.push(newEvent);
   }
+  console.log(events);
   events.forEach((elem) => {
-    addElementToDayPlanner(elem.time);
+    addElementToDayPlanner(elem);
   });
 }
 
-function addElementToDayPlanner(time) {
+function addElementToDayPlanner(elem) {
   // Needs a label, text input area and a button
+  const time = elem.time;
+  const currHour = parseInt(moment().format("H"));
+
+  // Negative = past, 0 = current, 1 = future
+  console.log("future?", elem.hour > currHour);
+  //   const timeStatus =
+
+  // Generating elements
   const divWrapper = $("<div>");
   const planner = $("#day-planner");
   const label = $("<label>");
   const input = $("<input>");
   const button = $("<button>");
+
+  // timeClass
+  let timeClass = "past";
+  if (elem.hour >= currHour) {
+    if (elem.hour === currHour) {
+      timeClass = "present";
+    } else {
+      timeClass = "future";
+    }
+  }
+
+  // Customizing each element as needed
   label.html(time);
   input.attr("type", "text");
   input.attr("data-index", time);
+  input.addClass(timeClass);
   input.attr("value", getEventByTime(time));
   button.html("Add");
   button.attr("data-index", time);
+
+  // Appending stuff to DOM
   divWrapper.append(label);
   divWrapper.append(input);
   divWrapper.append(button);
   divWrapper.on("click", "button", handleButtonClick);
   planner.append(divWrapper);
+
+  // Reference list for simplifying event handling
   inputRefList.push(input);
 }
 
@@ -54,7 +81,6 @@ function handleButtonClick(e) {
     if (ds === dsCheck) {
       // Save to local storage
       const saveThisValue = elem[0].value;
-      console.log(saveThisValue);
       addNewEvet(ds, saveThisValue);
     }
   });
