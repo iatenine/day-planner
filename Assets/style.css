@@ -1,5 +1,5 @@
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   line-height: 1;
 }
@@ -11,6 +11,10 @@ textarea {
   color: #000000;
   border-left: 1px solid black;
   padding: 10px;
+}
+
+.grow {
+  flex-grow: 1;
 }
 
 .jumbotron {
@@ -37,6 +41,7 @@ textarea {
 }
 
 .hour {
+  align-self: center;
   background-color: #ffffff;
   color: #000000;
   border-top: 1px dashed #000000;
@@ -62,6 +67,7 @@ textarea {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   background-color: #06aed5;
+  padding: 1.75rem;
   color: white;
 }
 

@@ -56,12 +56,19 @@ function addElementToDayPlanner(elem) {
 
   // Customizing each element as needed
   label.html(time);
-  input.attr("type", "text");
+  input.attr("type", "textarea");
   input.attr("data-index", time);
-  input.addClass(timeClass);
   input.attr("value", getEventByTime(time));
-  button.html("Add");
+  button.html("+");
   button.attr("data-index", time);
+
+  // Apply classes
+  input.addClass(timeClass);
+  input.addClass("grow");
+  label.addClass("hour");
+  button.addClass("saveBtn");
+  divWrapper.addClass("time-block");
+  divWrapper.addClass("row");
 
   // Appending stuff to DOM
   divWrapper.append(label);
