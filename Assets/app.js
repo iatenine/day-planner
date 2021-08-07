@@ -1,5 +1,6 @@
 // Save day of week from moment to const
 const dayOfWeek = moment().format("dddd MMM Do YYYY"); // Sunday, March 14th 2016 (or something like that)
+const inputRefList = [];
 const busHours = [];
 
 $("#currentDay").append("<div class=>" + dayOfWeek + "</div>");
@@ -32,10 +33,16 @@ function addElementToDayPlanner(time) {
   divWrapper.append(button);
   divWrapper.on("click", "button", handleButtonClick);
   planner.append(divWrapper);
+  inputRefList.push(input);
 }
 
 function handleButtonClick(e) {
-  console.log("button clicked", e);
-  console.log(e.currentTarget);
-  console.log(e.currentTarget.dataset.index);
+  const ds = e.currentTarget.dataset.index;
+  inputRefList.forEach((elem) => {
+    const dsCheck = elem[0].dataset.index;
+    if (ds === dsCheck) {
+      // Save to local storage
+      const saveThisValue = elem[0].value;
+    }
+  });
 }
