@@ -1,20 +1,32 @@
 // Save day of week from moment to const
 const dayOfWeek = moment().format("dddd MMM Do YYYY"); // Sunday, March 14th 2016 (or something like that)
 const inputRefList = [];
-const busHours = [];
+const events = [];
 
+// Show the current day at the top of the page
 $("#currentDay").append("<div class=>" + dayOfWeek + "</div>");
 
 function init() {
+  const savedEvents = JSON.parse(localStorage.getItem("events"));
+
   for (var i = 9; i < 18; i++) {
-    busHours.push(moment().hour(i).format("HH") + ":00");
+    let newEvent;
+    if (!savedEvents) {
+      newEvent = {
+        time: moment().hour(i).format("HH") + ":00",
+        event: "",
+      };
+    } else {
+      newEvent = savedEvents[i - 9];
+      console.log("newEvent: ", newEvent);
+    }
+    events.push(newEvent);
   }
-  busHours.forEach((elem) => {
-    addElementToDayPlanner(elem);
+
+  events.forEach((elem) => {
+    addElementToDayPlanner(elem.time);
   });
 }
-init();
-console.log(busHours);
 
 function addElementToDayPlanner(time) {
   // Needs a label, text input area and a button
@@ -43,6 +55,24 @@ function handleButtonClick(e) {
     if (ds === dsCheck) {
       // Save to local storage
       const saveThisValue = elem[0].value;
+      console.log(saveThisValue);
+      addNewEvet(ds, saveThisValue);
     }
   });
 }
+
+// Add a string to the event property of the events object
+function addNewEvet(time, eventString) {
+  for (let x = 0; x < events.length; x += 1) {
+    if (events[x].time === time) {
+      events[x].event = eventString;
+      console.log("new event: ", events[x]);
+      console.log("All events: ", events);
+      // Store events to localStorage
+      localStorage.setItem("events", JSON.stringify(events));
+      return;
+    }
+  }
+}
+
+init();
