@@ -8,7 +8,6 @@ $("#currentDay").append("<div class=>" + dayOfWeek + "</div>");
 
 function init() {
   const savedEvents = JSON.parse(localStorage.getItem("events"));
-
   for (var i = 9; i < 18; i++) {
     let newEvent;
     if (!savedEvents) {
@@ -22,7 +21,6 @@ function init() {
     }
     events.push(newEvent);
   }
-
   events.forEach((elem) => {
     addElementToDayPlanner(elem.time);
   });
@@ -38,6 +36,7 @@ function addElementToDayPlanner(time) {
   label.html(time);
   input.attr("type", "text");
   input.attr("data-index", time);
+  input.attr("value", getEventByTime(time));
   button.html("Add");
   button.attr("data-index", time);
   divWrapper.append(label);
@@ -63,16 +62,20 @@ function handleButtonClick(e) {
 
 // Add a string to the event property of the events object
 function addNewEvet(time, eventString) {
+  const index = getItemIndexByTime(time);
+  events[index].event = eventString;
+  localStorage.setItem("events", JSON.stringify(events));
+}
+
+function getItemIndexByTime(time) {
   for (let x = 0; x < events.length; x += 1) {
-    if (events[x].time === time) {
-      events[x].event = eventString;
-      console.log("new event: ", events[x]);
-      console.log("All events: ", events);
-      // Store events to localStorage
-      localStorage.setItem("events", JSON.stringify(events));
-      return;
-    }
+    if (events[x].time === time) return x;
   }
+}
+
+function getEventByTime(time) {
+  const index = getItemIndexByTime(time);
+  return events[index].event;
 }
 
 init();
