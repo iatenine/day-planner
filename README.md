@@ -1,4 +1,4 @@
-# day-planner
+# Day Planner
 
 ## Description
 
@@ -18,4 +18,20 @@ being past, red the present and green the future
 
 ## Deployment
 
-[Click here to deploy!](https://iatenine.github.io/day-planner/)
+[Live Link](https://iatenine.github.io/day-planner/)
+
+## Technologies Used
+
+ - JQuery
+ - MomentJS
+ - Javascript
+ - Bootstrap
+ - FontAwesome
+
+## License
+
+This project is released under the [MIT License](https://github.com/iatenine/day-planner/blob/main/LICENSE)
+
+## Collaborator(s)
+
+[Jack Linhart](mailto:FullJackDevelopment@gmail.com)
